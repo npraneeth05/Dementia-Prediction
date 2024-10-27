@@ -1,5 +1,5 @@
 import streamlit as st
 
-st.title('Dementia Prediction Model')
+st.title('Dementia Prediction App 🤖')
 
-st.write('Hello world!')
+st.write('Early diagnosis')
