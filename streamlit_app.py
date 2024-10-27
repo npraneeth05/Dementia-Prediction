@@ -11,9 +11,12 @@ with st.expander('Data'):
   df
 
   st.write('**X**')
-  X = df.drop('species', axis=1)
+  X = df.drop('Subject ID', axis=1)
   X
-
+ 
+  st.write('**Y**')
+  Y = df.Subject_ID
+  Y
   
 with st.sidebar:
   #Group,Visit,MR Delay,M/F,Hand,Age,EDUC,SES,MMSE,CDR,eTIV,nWBV,ASF
