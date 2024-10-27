@@ -5,6 +5,8 @@ st.title('Dementia Prediction App 🤖')
 
 st.info('Early diagnosis for better future..🩺🔬')
 
+with st.expander('Data'):
+  df = pd.read_csv('')
 
   
 with st.sidebar:
