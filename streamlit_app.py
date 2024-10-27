@@ -15,7 +15,7 @@ with st.expander('Data'):
   X
  
   st.write('**Y**')
-  Y = df.drop('MRI ID', axis=1)
+  Y = df.drop('MRI ID', axis=2)
   Y
   
 with st.sidebar:
