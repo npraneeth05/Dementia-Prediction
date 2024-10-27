@@ -15,7 +15,7 @@ with st.expander('Data'):
   X
  
   st.write('**Y**')
-  Y = df.Subject_ID
+  Y = df.SubjectID
   Y
   
 with st.sidebar:
