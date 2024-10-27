@@ -17,5 +17,7 @@ with st.expander('Data'):
   st.write('**Y**')
   Y = df.species
   Y
-with st.expander('Data Visualization'):
-  st.scatter_chart(data=df, x='Group', y='Age', color='species')
+with st.sidebar:
+  #Group,Visit,MR Delay,M/F,Hand,Age,EDUC,SES,MMSE,CDR,eTIV,nWBV,ASF
+  st.header('Input Features')
+  
