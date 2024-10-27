@@ -15,7 +15,7 @@ with st.expander('Data'):
   X
  
   st.write('**Y**')
-  Y = df.drop.Group
+  Y = df.Group
   Y
   
 with st.sidebar:
