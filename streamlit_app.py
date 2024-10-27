@@ -11,11 +11,11 @@ with st.expander('Data'):
   df
 
   st.write('**X**')
-  X = df.drop('Subject ID', axis=1)
+  X = df.drop('Group', axis=1)
   X
  
   st.write('**Y**')
-  Y = df.drop('MRI ID', axis=2)
+  Y = df.drop.Group
   Y
   
 with st.sidebar:
