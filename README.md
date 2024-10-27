@@ -1,13 +1,10 @@
-# 📦 Streamlit App Starter Kit 
+# 🤖 Dementia Prediction App
 ```
-⬆️ (Replace above with your app's name)
-```
-
-Description of the app ...
+⬆️ This app prediction the complexity of the dementia disease, which helps in prior medical treatment
 
 ## Demo App
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://app-starter-kit.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://Dementia-Prediction.streamlit.app/)
 
 ## GitHub Codespaces
 
