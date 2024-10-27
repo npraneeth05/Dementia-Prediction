@@ -13,8 +13,8 @@ with st.expander('Data'):
 with st.sidebar:
   st.header('Input Features')
   #Age,EDUC,MMSE,CDR,eTIV,nWBV
-  Gender = st.selectbox ('Gender', ('Male', 'Female'), 'color'=cyan)
-  Age = st.slider('Age', 0, 45, 100)
+  Gender = st.selectbox ('Gender', ('Male', 'Female'))
+  Age = st.slider('Age', 0, 45, 100,  'color'=cyan)
   EDUC = st.slider('Education', 0, 17, 25)
   
   
