@@ -7,6 +7,7 @@ st.info('Early diagnosis for better future..🩺🔬')
 
 with st.expander('Data'):
   df = pd.read_csv('https://raw.githubusercontent.com/npraneeth05/Dementia-Prediction/refs/heads/master/dementia_dataset.csv')
+  df
 
   
 with st.sidebar:
