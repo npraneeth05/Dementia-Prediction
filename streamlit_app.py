@@ -18,4 +18,4 @@ with st.expander('Data'):
   Y = df.species
   Y
 with st.expander('Data Visualization'):
-  st.scatter_chart(data=df, x='Group', y='Age', color='species'
+  st.scatter_chart(data=df, x='Group', y='Age', color='species')
