@@ -14,9 +14,7 @@ with st.expander('Data'):
   X = df.drop('species', axis=1)
   X
 
-  st.write('**Y**')
-  Y = df.species
-  Y
+  
 with st.sidebar:
   #Group,Visit,MR Delay,M/F,Hand,Age,EDUC,SES,MMSE,CDR,eTIV,nWBV,ASF
   st.header('Input Features')
