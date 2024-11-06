@@ -17,6 +17,6 @@ with st.sidebar:
   Age = st.slider('Age', 0, 100, 45)
   EDUC = st.slider('Education', 0, 17, 25)
   MMSE = st.slider('MMSE', 5, 17, 30)
-  CDR = st.slider('CDR', 0.1, 6, 2)
+  CDR = st.slider('CDR', 0.1, 6.0, 2.0)
   ETIV = st.slider('eTIV', 1000, 1500, 2000)
   NWBW = st.slider('nWBW', 0.0001, 0.681, 1)
