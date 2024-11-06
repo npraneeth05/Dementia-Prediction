@@ -82,7 +82,7 @@ if st.button("predict"):
     y = nb_clf.predict(input)
 
     if y[0]==0:
-      st.sucess("not demented")
+      st.success("not demented")
     elif y[0]==1:
       st.warning(" demented")
     else:
