@@ -82,11 +82,8 @@ if st.button("predict"):
 
     nb_clf.fit(xtrain, ytrain)
 
-    y = nb_clf.predict(xtest)
+    y = nb_clf.predict(input)
 
-    
-    # Making predictions
-    y = rf_classifier.predict(input)
     if y[0]==0:
       st.warning("demented")
     elif y[0]==1:
