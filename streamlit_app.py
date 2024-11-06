@@ -69,7 +69,8 @@ if st.button("predict"):
       input_values
     
 
-    
+    st.write("Length of input_values:", len(input_values))
+    st.write("Length of y_raw:", len(y_raw))
     # Splitting the data into training and testing sets
     from sklearn.model_selection import train_test_split
     X_train, X_test, y_train, y_test = train_test_split(input_values, y_raw, test_size=0.2, random_state=42)
