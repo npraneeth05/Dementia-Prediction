@@ -61,6 +61,7 @@ if st.button("predict"):
     
     arr = np.array(input_values)
     input =arr[0, :]
+    st.write(input_df)
     input_values =arr[1:, :]
     st.write("Input shape:", input.shape)
     with st.expander('Input features'):
