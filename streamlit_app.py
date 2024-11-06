@@ -51,8 +51,8 @@ if st.button("predict"):
     
     
     input_df = pd.DataFrame(data, index=[0])
+    st.write(input_df)
     input_df=input_df["M/F"].replace({"Male":0,"Female":1},inplace=True)
-  
     input_values = pd.concat([input_df, X_raw], axis=0)
     st.write(input_df)
     
