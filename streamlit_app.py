@@ -15,7 +15,7 @@ with st.expander('Data'):
   df
   st.write('*X*')
   df = df.drop(["MMSE"],axis=1,inplace=True)
-  df = df.drop(["SES"],axis=1,inplace=True)
+  df = df.drop(["SES"],axis=1)
   df = df.drop(["Subject ID"],axis=1,inplace=True)
   df = df.drop(["MRI ID"],axis=1,inplace=True)
   df = df.drop(["Visit"],axis=1,inplace=True)
