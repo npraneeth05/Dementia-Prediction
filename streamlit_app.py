@@ -82,7 +82,7 @@ if st.button("predict"):
     y = nb_clf.predict(input)
 
     if y[0]==0:
-      st.success("Your health check-up is clear of any disease markers.😄")
+      st.success("Your health check-up is clear of disease markers.😄")
     elif y[0]==1:
       st.warning("You’ve been diagnosed with Dementia")
     else:
