@@ -61,18 +61,13 @@ if st.button("predict"):
     arr = np.array(input_values)
     input =arr[0, :]
     input = input.reshape(1, -1)
-    st.write(input)
     input_values =arr[1:, :]
-    st.write("Input shape:", input.shape)
     with st.expander('Input features'):
       st.write('*Input values*')
       input_df
       st.write('*Combined input data*')
       input_values
     
-
-    st.write("Length of input_values:", len(input_values))
-    st.write("Length of y_raw:", len(y_raw))
     # Splitting the data into training and testing sets
     from sklearn.model_selection import train_test_split
     X_train, X_test, y_train, y_test = train_test_split(input_values, y_raw, test_size=0.2, random_state=42)
