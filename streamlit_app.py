@@ -60,7 +60,7 @@ if st.button("predict"):
     
     arr = np.array(input_values)
     input =arr[0, :]
-    input_values =arr[1:, :]
+    input_values =arr[0:, :]
     
     with st.expander('Input features'):
       st.write('*Input values*')
