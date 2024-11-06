@@ -22,7 +22,7 @@ with st.expander('Data'):
   df = df.drop(["Hand"],axis=1)
   df = df.drop(["ASF"],axis=1)
   df["M/F"].replace({"M":0,"F":1},inplace=True)
-  df["Group"].replace({"Nondemented":0,"Demented":1,"Converted":0},inplace=True)
+  df["Group"].replace({"Nondemented":0,"Demented":1,"Converted":2},inplace=True)
   df.fillna(df.mean,inplace=True)
   X_raw= df.drop("Group", axis=1)
   X_raw
@@ -82,8 +82,9 @@ if st.button("predict"):
     y = nb_clf.predict(input)
 
     if y[0]==0:
-      st.warning("demented")
+      st.sucess("not demented")
     elif y[0]==1:
-      st.success("not demented")
+      st.warning(" demented")
     else:
-      st.warning("converted")
+      st.warning(" converted")
+
