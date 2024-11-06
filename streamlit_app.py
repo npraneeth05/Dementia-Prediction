@@ -38,7 +38,7 @@ with st.sidebar:
   MR_Delay = st.text_area('MR-Delay')
   EDUC = st.slider('Education', 0, 25, 11)
   CDR = st.selectbox('CDR', (0.0, 0.5, 1.0, 2.0))
-  ETIV = st.text_area('eTIV', 1000, 2000, 1568)
+  ETIV = st.text_area('eTIV')
   NWBW = st.slider('nWBW', 0.0001, 1.000, 0.681)
 if st.button("predict"):
     data = {'M/F': Gender,
