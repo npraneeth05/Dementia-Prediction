@@ -51,16 +51,16 @@ if st.button("predict"):
     
     
     input_df = pd.DataFrame(data, index=[0])
-    st.write(input_df)
     input_df["M/F"].replace({"Male":0,"Female":1},inplace=True)
     input_values = pd.concat([input_df, X_raw], axis=0)
-    st.write(input_df)
+
     
     scaler =StandardScaler()
     input_values = scaler.fit_transform(input_values)
     
     arr = np.array(input_values)
     input =arr[0, :]
+    input = input.reshape(1, -1)
     st.write(input)
     input_values =arr[1:, :]
     st.write("Input shape:", input.shape)
