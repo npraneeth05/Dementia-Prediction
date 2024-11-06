@@ -80,7 +80,7 @@ if st.button("predict"):
     nb_clf = GaussianNB()
 
 
-    nb_clf.fit(xtrain, ytrain)
+    nb_clf.fit(X_train, y_train)
 
     y = nb_clf.predict(input)
 
