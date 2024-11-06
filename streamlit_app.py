@@ -14,7 +14,7 @@ with st.sidebar:
   st.header('Input Features')
   #Age,EDUC,MMSE,CDR,eTIV,nWBV
   Gender = st.selectbox ('Gender', ('Male', 'Female'))
-  Age = st.slider('Age', 0, 100)
+  Age = st.slider('Age', 0, 100, 45)
   EDUC = st.slider('Education', 0, 17, 25)
   MMSE = st.slider('MMSE', 5, 17, 30)
   CDR = st.text('CDR', 0.1, 2, 6)
