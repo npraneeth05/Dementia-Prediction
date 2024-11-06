@@ -71,11 +71,10 @@ if st.button("predict"):
 
     
     # Splitting the data into training and testing sets
+    from sklearn.model_selection import train_test_split
     X_train, X_test, y_train, y_test = train_test_split(input_values, y_raw, test_size=0.2, random_state=42)
     from sklearn.naive_bayes import GaussianNB
-    from sklearn.model_selection import train_test_split
-    from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-
+   
 
     nb_clf = GaussianNB()
 
