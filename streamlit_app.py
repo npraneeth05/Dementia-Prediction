@@ -23,7 +23,7 @@ with st.expander('Data'):
   df = df.drop(["ASF"],axis=1)
   df["M/F"].replace({"M":0,"F":1},inplace=True)
   df["Group"].replace({"Nondemented":0,"Demented":1,"Converted":0},inplace=True)
-  df.fillna(data.mean,inplace=True)
+  df.fillna(df.mean,inplace=True)
   X_raw= df.drop("Group", axis=1)
   X_raw
 
