@@ -35,7 +35,7 @@ with st.sidebar:
   st.header('Input Features')
   Gender = st.selectbox ('Gender', ('Male', 'Female'))
   Age = st.slider('Age', 0, 100, 45)
-  MR_Delay = st.number_input("MR-Delay", min_value=0, max_value=3000, step=1356)
+  MR_Delay = st.number_input("MR-Delay", max_value=3000, step=1356)
   EDUC = st.slider('Education', 0, 25, 11)
   CDR = st.selectbox('CDR', (0.0, 0.5, 1.0, 2.0))
   ETIV = st.number_input("eTIV", min_value=0, max_value=2000, step=1421)
