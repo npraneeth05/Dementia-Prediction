@@ -19,4 +19,4 @@ with st.sidebar:
   MMSE = st.slider('MMSE', 5, 17, 30)
   CDR = st.slider('CDR', 0.1, 6.0, 2.0)
   ETIV = st.slider('eTIV', 1000, 1500, 2000)
-  NWBW = st.slider('nWBW', 0.0001, 0.681, 1)
+  NWBW = st.slider('nWBW', 0.0001, 0.681, 1.000)
