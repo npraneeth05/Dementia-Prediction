@@ -97,19 +97,11 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 
-# ---------------------------------------------------
-# Page Configuration
-# ---------------------------------------------------
-
 st.set_page_config(
     page_title="Dementia Prediction",
     page_icon="🧠",
     layout="wide"
 )
-
-# ---------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------
 
 st.markdown("""
 <style>
@@ -129,7 +121,7 @@ st.markdown("""
     margin-bottom:30px;
 }
 
-.form-card{
+div[data-testid="stForm"]{
     background-color:white;
     padding:25px;
     border-radius:15px;
@@ -145,19 +137,8 @@ st.markdown("""
     height:3em;
 }
 
-div[data-testid="stForm"]{
-    background-color:white;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0px 4px 15px rgba(0,0,0,0.08);
-}
-
 </style>
 """, unsafe_allow_html=True)
-
-# ---------------------------------------------------
-# Header
-# ---------------------------------------------------
 
 st.markdown(
     '<p class="main-title">Dementia Prediction App 🤖</p>',
@@ -169,50 +150,30 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# ---------------------------------------------------
-# Dataset Section
-# ---------------------------------------------------
+df = pd.read_csv("dementia_dataset.csv")
 
-with st.expander("Dataset Information"):
+df = df.drop(["MMSE"], axis=1)
+df = df.drop(["SES"], axis=1)
+df = df.drop(["Subject ID"], axis=1)
+df = df.drop(["MRI ID"], axis=1)
+df = df.drop(["Visit"], axis=1)
+df = df.drop(["Hand"], axis=1)
+df = df.drop(["ASF"], axis=1)
 
-    df = pd.read_csv("dementia_dataset.csv")
+df["M/F"].replace({"M": 0, "F": 1}, inplace=True)
+df["Group"].replace(
+    {
+        "Nondemented": 0,
+        "Demented": 1,
+        "Converted": 2
+    },
+    inplace=True
+)
 
-    st.write("### Original Dataset")
-    st.dataframe(df)
+df.fillna(df.mean(), inplace=True)
 
-    df = df.drop(["MMSE"], axis=1)
-    df = df.drop(["SES"], axis=1)
-    df = df.drop(["Subject ID"], axis=1)
-    df = df.drop(["MRI ID"], axis=1)
-    df = df.drop(["Visit"], axis=1)
-    df = df.drop(["Hand"], axis=1)
-    df = df.drop(["ASF"], axis=1)
-
-    df["M/F"].replace({"M": 0, "F": 1}, inplace=True)
-
-    df["Group"].replace(
-        {
-            "Nondemented": 0,
-            "Demented": 1,
-            "Converted": 2
-        },
-        inplace=True
-    )
-
-    df.fillna(df.mean(), inplace=True)
-
-    X_raw = df.drop("Group", axis=1)
-    y_raw = df["Group"]
-
-    st.write("### Features (X)")
-    st.dataframe(X_raw)
-
-    st.write("### Target (Y)")
-    st.dataframe(y_raw)
-
-# ---------------------------------------------------
-# Centered Input Form
-# ---------------------------------------------------
+X_raw = df.drop("Group", axis=1)
+y_raw = df["Group"]
 
 left, center, right = st.columns([1, 2, 1])
 
@@ -271,10 +232,6 @@ with center:
             "Predict Dementia Risk"
         )
 
-# ---------------------------------------------------
-# Prediction
-# ---------------------------------------------------
-
 if predict_btn:
 
     data = {
@@ -297,16 +254,10 @@ if predict_btn:
         inplace=True
     )
 
-    input_values = pd.concat(
-        [input_df, X_raw],
-        axis=0
-    )
+    input_values = pd.concat([input_df, X_raw], axis=0)
 
     scaler = StandardScaler()
-
-    input_values = scaler.fit_transform(
-        input_values
-    )
+    input_values = scaler.fit_transform(input_values)
 
     arr = np.array(input_values)
 
@@ -314,16 +265,6 @@ if predict_btn:
     input_data = input_data.reshape(1, -1)
 
     input_values = arr[1:, :]
-
-    with st.expander("Input Features"):
-
-        st.write("### User Input")
-        st.dataframe(input_df)
-
-        st.write("### Processed Input")
-        st.dataframe(
-            pd.DataFrame(input_data)
-        )
 
     X_train, X_test, y_train, y_test = train_test_split(
         input_values,
@@ -334,33 +275,17 @@ if predict_btn:
 
     nb_clf = GaussianNB()
 
-    nb_clf.fit(
-        X_train,
-        y_train
-    )
+    nb_clf.fit(X_train, y_train)
 
-    y = nb_clf.predict(
-        input_data
-    )
-
-    st.divider()
+    y = nb_clf.predict(input_data)
 
     st.subheader("Prediction Result")
 
     if y[0] == 0:
-
-        st.success(
-            "✅ Your health check-up is clear of disease markers."
-        )
+        st.success("✅ Your health check-up is clear of disease markers.")
 
     elif y[0] == 1:
-
-        st.error(
-            "⚠️ You have been classified in the Demented category."
-        )
+        st.error("⚠️ You have been classified in the Demented category.")
 
     else:
-
-        st.warning(
-            "🟡 You are classified in the Converted category. Early treatment and regular monitoring are recommended."
-        )
+        st.warning("🟡 You are classified in the Converted category. Early treatment and regular monitoring are recommended.")
