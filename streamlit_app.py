@@ -100,28 +100,6 @@ from sklearn.naive_bayes import GaussianNB
 st.set_page_config(page_title="Dementia Prediction App", page_icon="🤖", layout="wide", initial_sidebar_state="expanded")
 
 # Custom CSS for smoother UI elements and eye-catching buttons
-st.markdown("""
-    <style>
-    .stButton>button {
-        width: 100%;
-        border-radius: 8px;
-        height: 3em;
-        background-color: #FF4B4B;
-        color: white;
-        font-size: 16px;
-        font-weight: 600;
-        transition: all 0.3s ease-in-out;
-    }
-    .stButton>button:hover {
-        transform: scale(1.02);
-        box-shadow: 0px 4px 10px rgba(255, 75, 75, 0.3);
-    }
-    div[data-testid="stExpander"] {
-        border-radius: 10px;
-        border: 1px solid #e0e0e0;
-    }
-    </style>
-""", unsafe_allow_html=True)
 
 st.title('Dementia Prediction App 🤖')
 st.info('Early diagnosis for better future..🩺🔬')
