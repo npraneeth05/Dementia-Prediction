@@ -92,93 +92,275 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 
-st.set_page_config(page_title="Dementia Prediction System", page_icon="🩺", layout="centered")
+# ---------------------------------------------------
+# Page Configuration
+# ---------------------------------------------------
 
-st.title('Dementia Prediction System')
-st.info('Early diagnosis for a better future.')
+st.set_page_config(
+    page_title="Dementia Prediction",
+    page_icon="🧠",
+    layout="wide"
+)
 
-with st.expander('Data Overview & Processing'):
-    df = pd.read_csv('dementia_dataset.csv')
-    st.dataframe(df, use_container_width=True)
-    
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown('**Feature Set (X)**')
-        df = df.drop(["MMSE", "SES", "Subject ID", "MRI ID", "Visit", "Hand", "ASF"], axis=1)
-        df["M/F"].replace({"M": 0, "F": 1}, inplace=True)
-        df["Group"].replace({"Nondemented": 0, "Demented": 1, "Converted": 2}, inplace=True)
-        df.fillna(df.mean(numeric_only=True), inplace=True)
-        X_raw = df.drop("Group", axis=1)
-        st.dataframe(X_raw, use_container_width=True)
+# ---------------------------------------------------
+# Custom CSS
+# ---------------------------------------------------
 
-    with col2:
-        st.markdown('**Target Variable (y)**')
-        y_raw = df["Group"]
-        st.dataframe(y_raw, use_container_width=True)
+st.markdown("""
+<style>
 
-st.markdown("---")
-st.subheader('Patient Clinical Parameters')
+.main-title{
+    text-align:center;
+    color:#1E3A8A;
+    font-size:42px;
+    font-weight:700;
+    margin-bottom:5px;
+}
 
-col_a, col_b = st.columns(2)
+.sub-title{
+    text-align:center;
+    color:#6B7280;
+    font-size:18px;
+    margin-bottom:30px;
+}
 
-with col_a:
-    Gender = st.selectbox('Gender', ('Male', 'Female'))
-    Age = st.slider('Age', 0, 100, 45)
-    MR_Delay = st.number_input("Gaps between MRI scans", min_value=0, max_value=3000, step=1)
-    EDUC = st.slider('Education (Years)', 0, 25, 11)
+.form-card{
+    background-color:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0px 4px 15px rgba(0,0,0,0.08);
+}
 
-with col_b:
-    CDR = st.selectbox('Clinical Dementia Rating (CDR)', (0.0, 0.5, 1.0, 2.0))
-    ETIV = st.number_input("Estimated Total Intracranial Volume", min_value=0, max_value=2000, step=1)
-    NWBW = st.slider('Normalized Whole Brain Volume', 0.0001, 1.000, 0.681)
+.stButton > button{
+    width:100%;
+    background-color:#2563EB;
+    color:white;
+    font-weight:bold;
+    border-radius:10px;
+    height:3em;
+}
 
-st.markdown("<br>", unsafe_allow_html=True)
+div[data-testid="stForm"]{
+    background-color:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0px 4px 15px rgba(0,0,0,0.08);
+}
 
-btn_col1, btn_col2, btn_col3 = st.columns([1, 1, 1])
-with btn_col2:
-    predict_button = st.button("Generate Prediction", use_container_width=True, type="primary")
+</style>
+""", unsafe_allow_html=True)
 
-if predict_button:
-    data = {'M/F': Gender,
-            'Age': Age,
-            'MR Delay': MR_Delay,
-            'EDUC': EDUC,
-            'CDR': CDR,
-            'eTIV': ETIV,
-            'nWBV': NWBW}
-    
+# ---------------------------------------------------
+# Header
+# ---------------------------------------------------
+
+st.markdown(
+    '<p class="main-title">Dementia Prediction App 🤖</p>',
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    '<p class="sub-title">Early Diagnosis for Better Future 🩺🔬</p>',
+    unsafe_allow_html=True
+)
+
+# ---------------------------------------------------
+# Dataset Section
+# ---------------------------------------------------
+
+with st.expander("Dataset Information"):
+
+    df = pd.read_csv("dementia_dataset.csv")
+
+    st.write("### Original Dataset")
+    st.dataframe(df)
+
+    df = df.drop(["MMSE"], axis=1)
+    df = df.drop(["SES"], axis=1)
+    df = df.drop(["Subject ID"], axis=1)
+    df = df.drop(["MRI ID"], axis=1)
+    df = df.drop(["Visit"], axis=1)
+    df = df.drop(["Hand"], axis=1)
+    df = df.drop(["ASF"], axis=1)
+
+    df["M/F"].replace({"M": 0, "F": 1}, inplace=True)
+
+    df["Group"].replace(
+        {
+            "Nondemented": 0,
+            "Demented": 1,
+            "Converted": 2
+        },
+        inplace=True
+    )
+
+    df.fillna(df.mean(), inplace=True)
+
+    X_raw = df.drop("Group", axis=1)
+    y_raw = df["Group"]
+
+    st.write("### Features (X)")
+    st.dataframe(X_raw)
+
+    st.write("### Target (Y)")
+    st.dataframe(y_raw)
+
+# ---------------------------------------------------
+# Centered Input Form
+# ---------------------------------------------------
+
+left, center, right = st.columns([1, 2, 1])
+
+with center:
+
+    with st.form("prediction_form"):
+
+        st.subheader("Patient Information")
+
+        Gender = st.selectbox(
+            "Gender",
+            ("Male", "Female")
+        )
+
+        Age = st.slider(
+            "Age",
+            0,
+            100,
+            45
+        )
+
+        MR_Delay = st.number_input(
+            "MR Delay",
+            min_value=0,
+            max_value=3000,
+            step=1
+        )
+
+        EDUC = st.slider(
+            "Education",
+            0,
+            25,
+            11
+        )
+
+        CDR = st.selectbox(
+            "CDR",
+            (0.0, 0.5, 1.0, 2.0)
+        )
+
+        ETIV = st.number_input(
+            "eTIV",
+            min_value=0,
+            max_value=2000,
+            step=1
+        )
+
+        NWBW = st.slider(
+            "nWBV",
+            min_value=0.0001,
+            max_value=1.0000,
+            value=0.6810
+        )
+
+        predict_btn = st.form_submit_button(
+            "Predict Dementia Risk"
+        )
+
+# ---------------------------------------------------
+# Prediction
+# ---------------------------------------------------
+
+if predict_btn:
+
+    data = {
+        'M/F': Gender,
+        'Age': Age,
+        'MR Delay': MR_Delay,
+        'EDUC': EDUC,
+        'CDR': CDR,
+        'eTIV': ETIV,
+        'nWBV': NWBW
+    }
+
     input_df = pd.DataFrame(data, index=[0])
-    input_df["M/F"].replace({"Male": 0, "Female": 1}, inplace=True)
-    input_values = pd.concat([input_df, X_raw], axis=0)
+
+    input_df["M/F"].replace(
+        {
+            "Male": 0,
+            "Female": 1
+        },
+        inplace=True
+    )
+
+    input_values = pd.concat(
+        [input_df, X_raw],
+        axis=0
+    )
 
     scaler = StandardScaler()
-    input_values = scaler.fit_transform(input_values)
-    
+
+    input_values = scaler.fit_transform(
+        input_values
+    )
+
     arr = np.array(input_values)
-    user_input = arr[0, :].reshape(1, -1)
+
+    input_data = arr[0, :]
+    input_data = input_data.reshape(1, -1)
+
     input_values = arr[1:, :]
-    
-    with st.expander('View Processed Input Data'):
-        st.markdown('**Input values**')
-        st.dataframe(input_df, use_container_width=True)
-    
-    X_train, X_test, y_train, y_test = train_test_split(input_values, y_raw, test_size=0.2, random_state=42)
-    
+
+    with st.expander("Input Features"):
+
+        st.write("### User Input")
+        st.dataframe(input_df)
+
+        st.write("### Processed Input")
+        st.dataframe(
+            pd.DataFrame(input_data)
+        )
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        input_values,
+        y_raw,
+        test_size=0.2,
+        random_state=42
+    )
+
     nb_clf = GaussianNB()
-    nb_clf.fit(X_train, y_train)
 
-    y = nb_clf.predict(user_input)
+    nb_clf.fit(
+        X_train,
+        y_train
+    )
 
-    st.markdown("---")
-    st.subheader("Diagnostic Prediction")
-    
+    y = nb_clf.predict(
+        input_data
+    )
+
+    st.divider()
+
+    st.subheader("Prediction Result")
+
     if y[0] == 0:
-        st.success("Result: No dementia markers detected. The health check-up is clear.")
+
+        st.success(
+            "✅ Your health check-up is clear of disease markers."
+        )
+
     elif y[0] == 1:
-        st.error("Result: Diagnosis indicates Dementia markers.")
+
+        st.error(
+            "⚠️ You have been classified in the Demented category."
+        )
+
     else:
-        st.warning("Result: Early phase indicators detected. Proper treatment and monitoring are recommended.")
+
+        st.warning(
+            "🟡 You are classified in the Converted category. Early treatment and regular monitoring are recommended."
+        )
